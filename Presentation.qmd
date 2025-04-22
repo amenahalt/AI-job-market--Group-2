@@ -1,0 +1,86 @@
+---
+title: "AI's Impact on the Job Market"
+author: "Amenah Altamimi, Bryant Ha, Shaza Mumtaz" 
+date: "April 07, 2025"
+format:
+  revealjs:
+    slide-number: true
+    chalkboard: true
+    footer: "AI Job Market Analysis"
+    transition: fade # Added transition effect
+    transition-speed: default 
+---
+
+## Problem Definition
+- AI is reshaping jobs globally
+- Jobs disappearing, new ones emerging
+- Skills shifting in tech, marketing, retail
+- HR and policymakers need clarity
+
+
+## Research Objectives
+- RO1: AI adoption vs. job growth/decline
+- RO2: Job roles most impacted by AI
+- RO3: Skills needed in AI-driven jobs
+- Focus: Industries, locations, remote work
+
+## Importance of the Topic
+- HR: Hire/train for changing roles
+- Business owners: Stay competitive
+- Policymakers: Update education
+- Example: More design skills for remote jobs?
+
+##  Sampling/Data Collection
+- Source: Kaggle "AI-Powered Job Market Insights"
+- Data: Job location, AI use, salary, remote, growth
+- Why: Pre-collected, sufficient for class project
+- No manual collection needed
+
+## Data Wrangling – From Records to Data
+- Load CSV from Kaggle (Excel or Python)
+- Check columns: Job titles, AI adoption, growth
+- Look for weird stuff (missing data)
+- Decide how to handle issues
+
+## Data Wrangling – Tidying the Data
+- Standardize job titles (e.g., UX/UI vs. UI/UX)
+- Handle missing data (skip rows if few)
+- Goal: Neat, consistent dataset
+
+## Data Wrangling – Transforming the Data
+- Convert AI adoption: "low" = 1, "medium" = 2, "high" = 3
+- Group jobs (e.g., tech vs. retail)
+- Make data ready for analysis
+
+
+## RO1 - AI Adoption & Jobs
+- IV: Level of AI adoption
+- DV: Job growth or decline
+- Plan:
+  - Clean data, encode variables
+  - Visualize: Bar charts, boxplots, scatter plots
+
+## RO2 - Job Roles Impacted
+- IV: Job title (e.g., UX/UI, marketing)
+- DV: Growth projection
+- Plan:
+  - Collect job data (R, tidyverse)
+  - Visualize: ggplots for growth/salary
+
+##  RO3 - Skills in AI Jobs
+- IV: Job title
+- DV: Required skills
+- Factors: Remote, industry, salary
+- Plan:
+  - Group by skills
+  - Pie charts: Skills by remote/in-person
+
+## Conclusion
+- AI reshapes jobs and skills
+- Insights for HR, businesses, policymakers
+- Goal: Prepare workforce for AI economy
+- Clean data is key to trends
+
+## Q&A
+- Thank you!
+- Any questions?
