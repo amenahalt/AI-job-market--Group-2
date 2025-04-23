@@ -1,0 +1,131 @@
+---
+title: "RO3 – Skills & Remote Work Analysis"
+format: html
+code-tools: true
+---
+
+
+
+```{r}
+# 1) Load the tidyverse (which gives you %>% plus all dplyr, tidyr, ggplot2, etc.)
+library(tidyverse)
+
+# 2) Read in your CSV (adjust the path if your file lives somewhere else)
+df <- read_csv("ai_job_market_insights.csv")
+
+# 3) (Optional) Peek at the first few rows to confirm it loaded
+glimpse(df)
+
+```
+
+```{r}
+
+library(tidyverse)
+
+# make sure df is loaded…
+
+# 1. filter out missing values using the correct names
+ro3_data <- df %>%
+  filter(
+    !is.na(Job_Title),
+    !is.na(Required_Skills),
+    !is.na(Remote_Friendly)
+  ) %>%
+  # 2. split the comma-separated skills
+  separate_rows(Required_Skills, sep = ",\\s*") %>%
+  # 3. standardize the remote column
+  mutate(
+    Remote = if_else(Remote_Friendly == "Yes", "Remote", "In-Person"),
+    Skill  = str_trim(Required_Skills)
+  )
+
+# 4. count each skill by remote vs in-person
+skills_summary <- ro3_data %>%
+  count(Skill, Remote, name = "Count")
+
+```
+
+
+```{r}
+ggplot(skills_summary, aes(x = "", y = Count, fill = Skill)) +
+  geom_bar(width = 1, stat = "identity") +
+  coord_polar(theta = "y") +
+  facet_wrap(~ Remote) +
+  labs(
+    title = "Skill Distribution: Remote vs In-Person Roles",
+    x = NULL, y = NULL
+  ) +
+  theme_void() +
+  theme(
+    strip.text   = element_text(face = "bold"),
+    plot.title   = element_text(hjust = 0.5)
+  )
+```
+
+
+
+# 1. Top 10 Most Common Skills (Overall)
+
+```{r}
+
+# 1. Compute overall totals and pick top 10
+top_skills <- skills_summary %>%
+  group_by(Skill) %>%
+  summarise(Total = sum(Count), .groups = "drop") %>%
+  arrange(desc(Total)) %>%
+  slice_head(n = 10)
+
+# 2. Bar chart (horizontal) of those top 10
+ggplot(top_skills, aes(x = reorder(Skill, Total), y = Total)) +
+  geom_col() +
+  coord_flip() +
+  labs(
+    title = "Top 10 Most Common Skills Across All Roles",
+    x = "Skill",
+    y = "Frequency"
+  )
+
+```
+
+# 2. Remote vs In-Person Comparison for Top 10 Skills
+
+
+```{r}
+# Filter to just the top 10 skills
+remote_top <- skills_summary %>%
+  filter(Skill %in% top_skills$Skill)
+
+# Dodged bar chart
+ggplot(remote_top, aes(x = reorder(Skill, -Count), y = Count, fill = Remote)) +
+  geom_col(position = "dodge") +
+  labs(
+    title = "Remote vs In-Person: Top 10 Skills",
+    x = "Skill",
+    y = "Count",
+    fill = "Work Mode"
+  ) +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1)
+  )
+
+```
+
+
+
+# 3. Heatmap of Skill Frequencies by Work Mode
+```{r skill-heatmap}
+# Heatmap: skill on y-axis, Remote/In-Person on x-axis, tile fill = count
+ggplot(skills_summary, aes(x = Remote, y = Skill, fill = Count)) +
+  geom_tile() +
+  labs(
+    title = "Heatmap of Skill Frequencies by Work Mode",
+    x = "Work Mode",
+    y = "Skill",
+    fill = "Frequency"
+  ) +
+  theme(
+    axis.text.y = element_text(size = 7),
+    plot.title = element_text(hjust = 0.5)
+  )
+``` 
+
