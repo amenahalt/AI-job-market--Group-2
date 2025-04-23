@@ -1,0 +1,99 @@
+---
+title: "RO3 – Top 5 Skills Charts"
+format: html
+code-tools: true
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+# Load and prepare data
+ df <- read_csv("ai_job_market_insights.csv")
+ ro3_data <- df %>%
+  filter(
+    !is.na(Job_Title),
+    !is.na(Required_Skills),
+    !is.na(Remote_Friendly),
+    !is.na(Industry),
+    !is.na(Salary_USD)
+  ) %>%
+  separate_rows(Required_Skills, sep = ",\\s*") %>%
+  mutate(
+    Remote = if_else(Remote_Friendly == "Yes", "Remote", "In-Person"),
+    Salary_Bin = if_else(
+      Salary_USD > median(Salary_USD, na.rm = TRUE),
+      "High Salary", "Low Salary"
+    )
+  )
+# Identify top 5 skills overall
+ top5_skills <- ro3_data %>%
+  count(Required_Skills, name = "Count") %>%
+  arrange(desc(Count)) %>%
+  slice_head(n = 5) %>%
+  pull(Required_Skills)
+# Filter for top 5
+ ro3_top5 <- ro3_data %>% filter(Required_Skills %in% top5_skills)
+# Prepare counts for plots
+ remote_counts   <- ro3_top5 %>% count(Required_Skills, Remote,   name = "Count")
+ industry_counts <- ro3_top5 %>% count(Required_Skills, Industry, name = "Count")
+ salary_counts   <- ro3_top5 %>% count(Required_Skills, Salary_Bin, name = "Count")
+```
+
+## 1. Top 5 Skills: Remote vs In-Person
+
+```{r plot-remote-vs, fig.height=4}
+ggplot(remote_counts, aes(x = reorder(Required_Skills, Count), y = Count, fill = Remote)) +
+  geom_col(position = "dodge", width = 0.7) +
+  coord_flip() +
+  labs(
+    title = "Top 5 Skills: Remote vs In-Person",
+    x = "Skill", y = "Count", fill = "Work Mode"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    plot.title    = element_text(hjust = 0.5, face = "bold.italic"),
+    axis.title    = element_text(face = "bold"),
+    axis.text     = element_text(color = "gray20"),
+    panel.grid.major = element_line(linetype = "dotted"),
+    panel.grid.minor = element_blank()
+  )
+```
+
+## 2. Top 5 Skills by Industry
+
+```{r plot-by-industry, fig.height=5}
+ggplot(industry_counts, aes(x = reorder(Required_Skills, Count), y = Count, fill = Industry)) +
+  geom_col(position = "dodge", width = 0.7) +
+  coord_flip() +
+  labs(
+    title = "Top 5 Skills Across Industries",
+    x = "Skill", y = "Count", fill = "Industry"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    plot.title    = element_text(hjust = 0.5, face = "bold.italic"),
+    axis.title    = element_text(face = "bold"),
+    axis.text     = element_text(color = "gray20"),
+    panel.grid.major = element_line(linetype = "dotted"),
+    panel.grid.minor = element_blank()
+  )
+```
+
+## 3. Top 5 Skills: High vs Low Salary
+
+```{r plot-by-salary, fig.height=4}
+ggplot(salary_counts, aes(x = reorder(Required_Skills, Count), y = Count, fill = Salary_Bin)) +
+  geom_col(position = "dodge", width = 0.7) +
+  coord_flip() +
+  labs(
+    title = "Top 5 Skills by Salary Category",
+    x = "Skill", y = "Count", fill = "Salary Level"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    plot.title    = element_text(hjust = 0.5, face = "bold.italic"),
+    axis.title    = element_text(face = "bold"),
+    axis.text     = element_text(color = "gray20"),
+    panel.grid.major = element_line(linetype = "dotted"),
+    panel.grid.minor = element_blank()
+  )
+```
