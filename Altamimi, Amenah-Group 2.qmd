@@ -1,5 +1,66 @@
 ---
-title: "Altamimi, Amenah-Group 2"
-format: html
+title: "AI & the Future of Work: Skills Demand Insights (RO3)"
+author: "Amenah Altamimi"
+format:
+  html:
+    toc: true
+    code-overflow: wrap
+    code-copy: hover
+css: theme.scss
 ---
+
+
+# load_and_clean.R
+
+```{r}
+
+# 0) Install packages 
+# install.packages(c("tidyverse"))
+
+# 1) Load libraries
+library(tidyverse)
+
+# 2) Read the CSV 
+df <- read_csv("ai_job_market_insights.csv")
+
+# 3) Quick peek
+glimpse(df)
+summary(df)
+
+# 4) Basic cleaning: remove exact duplicates & rows missing critical info
+df_clean <- df %>%
+  distinct() %>% 
+  filter(
+    !is.na(Job_Title), 
+    !is.na(Required_Skills),
+    !is.na(Remote_Friendly),
+    !is.na(Industry),
+    !is.na(Salary_USD)
+  )
+
+# 5) Split comma-separated skills into long format
+df_skills <- df_clean %>%
+  # separate each skill into its own row
+  separate_rows(Required_Skills, sep = ",\\s*") %>%
+  # standardize Remote flag
+  mutate(
+    Remote = if_else(tolower(Remote_Friendly) == "yes", "Remote", "In-Person"),
+    # create salary bins for later analysis
+    Salary_Bin = if_else(
+      Salary_USD > median(Salary_USD, na.rm = TRUE),
+      "High Salary",
+      "Low Salary"
+    )
+  )
+
+# 6) Re‐inspect the transformed data
+glimpse(df_skills)
+df_skills %>% 
+  count(Required_Skills, sort = TRUE) %>% 
+  slice_head(n = 10)
+
+# 7) (Optional) Save cleaned long‐format data
+write_csv(df_skills, "ai_job_market_insights_long.csv")
+
+```
 
