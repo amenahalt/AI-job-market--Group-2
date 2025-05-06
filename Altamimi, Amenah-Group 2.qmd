@@ -64,3 +64,4 @@ write_csv(df_skills, "ai_job_market_insights_long.csv")
 
 ```
 
+week15
