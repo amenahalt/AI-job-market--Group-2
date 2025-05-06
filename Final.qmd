@@ -1,7 +1,13 @@
 ---
-title: "AI & the Future of Work: Skills Demand Insights (RO3)"
+title: "AI & the Future of Work: Skills Demand Insights"
+author: "Amenah Altamimi, Bryant Ha, Shaza Mumtaz" 
 format:
   revealjs:
+    slide-number: true
+    chalkboard: true
+    footer: "AI Job Market Analysis"
+    transition: fade # Added transition effect
+    transition-speed: default 
     theme: solarized
     css: theme.scss
     logo: "images/ccidm-cpp_logo.png"
