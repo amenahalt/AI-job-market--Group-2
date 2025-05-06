@@ -311,3 +311,5 @@ ggplot(pay_remote_demand, aes(x = Demand_Level, y = Avg_Salary, fill = Remote_Pe
 - **Jobs Hit Hardest**: UX Designers and Marketing Specialists show higher automation risk, especially in industries with high AI adoption (e.g., Technology, Retail), due to AI’s ability to automate design and marketing tasks.
 - **Jobs in Demand** AI Researchers and Cybersecurity Analysts are in demand, likely due to specialized skills (e.g., Machine Learning, Cyber security) that require human expertise AI can’t fully replace yet. • Safer Jobs: Roles with low automation risk and stable/growing demand (e.g., Operations Manager, HR Manager) rely on interpersonal skills, suggesting human judgment remains key. • - - **Pay and Remote Work**: Higher salaries and remote-friendly options correlate with demand, possibly reflecting companies’ efforts to retain talent in AI-vulnerable or high-skill roles.
 :::
+
+
