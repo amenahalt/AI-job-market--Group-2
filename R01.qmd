@@ -1,0 +1,174 @@
+---
+title: "AI Job Market Analysis Code"
+format: html
+execute:
+  warning: false
+  message: false
+---
+
+# Introduction
+
+This report analyzes the relationship between AI adoption levels and job growth projections across industries, using data from the `ai_job_market_insights.csv` dataset. The analysis includes descriptive statistics, visualizations, and statistical tests to explore trends and patterns.
+
+# Setup
+
+Load required R libraries for data manipulation, visualization, and statistical analysis.
+
+```{r setup, message=FALSE}
+library(tidyverse)
+library(ggthemes)
+library(knitr)
+library(MASS)
+```
+
+# 1. Data Preparation
+
+Load and clean the dataset, creating a processed dataset with factored AI adoption levels and a numeric growth score.
+
+```{r data-prep}
+# Load and clean data
+df <- read_csv("ai_job_market_insights.csv")
+
+ro1_data <- df %>%
+  filter(!is.na(AI_Adoption_Level), !is.na(Job_Growth_Projection)) %>%
+  mutate(
+    AI_Adoption = factor(AI_Adoption_Level, 
+                         levels = c("Low", "Medium", "High"),
+                         ordered = TRUE),
+    Growth_Score = case_when(
+      Job_Growth_Projection == "Decline" ~ -1,
+      Job_Growth_Projection == "Stable" ~ 0,
+      Job_Growth_Projection == "Growth" ~ 1
+    )
+  )
+```
+
+# 2. Descriptive Statistics
+
+Summarize job counts by AI adoption level and job growth projection.
+
+```{r desc-stats}
+desc_stats <- ro1_data %>%
+  count(AI_Adoption, Job_Growth_Projection) %>%
+  pivot_wider(names_from = Job_Growth_Projection, values_from = n)
+
+kable(desc_stats, caption = "Job Counts by AI Adoption Level")
+```
+
+# 3. Visualizations
+
+## Growth Proportion Plot
+
+Visualize the proportion of job growth statuses by AI adoption level.
+
+```{r growth-proportion, fig.width=8, fig.height=6}
+ggplot(ro1_data, aes(x = AI_Adoption, fill = Job_Growth_Projection)) +
+  geom_bar(position = "fill") +
+  scale_fill_brewer(palette = "Set2") +
+  labs(
+    title = "Job Growth Proportion by AI Adoption Level",
+    x = "AI Adoption Level",
+    y = "Proportion",
+    fill = "Growth Status"
+  ) +
+  theme_minimal()
+```
+
+## Growth Score Boxplot
+
+Display the distribution of growth scores across AI adoption levels.
+
+```{r growth-boxplot, fig.width=8, fig.height=6}
+ggplot(ro1_data, aes(x = AI_Adoption, y = Growth_Score, fill = AI_Adoption)) +
+  geom_boxplot(alpha = 0.7) +
+  scale_fill_brewer(palette = "Pastel1") +
+  labs(
+    title = "Job Growth Score by AI Adoption Level",
+    x = "AI Adoption Level",
+    y = "Growth Score (Decline=-1, Stable=0, Growth=1)"
+  ) +
+  theme_minimal() +
+  theme(legend.position = "none")
+```
+
+## Industry Facet Plot
+
+Show job growth by AI adoption level across different industries.
+
+```{r industry-facet, fig.width=8, fig.height=6}
+ggplot(ro1_data, aes(x = AI_Adoption, fill = Job_Growth_Projection)) +
+  geom_bar(position = "dodge") +
+  facet_wrap(~Industry, ncol = 2) +
+  labs(
+    title = "Job Growth by AI Adoption Across Industries",
+    x = "AI Adoption Level",
+    y = "Count",
+    fill = "Growth Status"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+# 4. Statistical Analysis
+
+## Chi-Squared Test
+
+Test for association between AI adoption level and job growth projection.
+
+```{r chi-test}
+chi_test <- chisq.test(
+  table(ro1_data$AI_Adoption_Level, ro1_data$Job_Growth_Projection))
+print(chi_test)
+```
+
+## Ordinal Regression
+
+Fit an ordinal regression model to predict job growth projection based on AI adoption level (if sufficient data is available).
+
+```{r ordinal-regression}
+if (nrow(ro1_data) > 50) {
+  growth_ordinal <- polr(
+    factor(Job_Growth_Projection, 
+           levels = c("Decline", "Stable", "Growth")) ~ AI_Adoption,
+    data = ro1_data,
+    Hess = TRUE
+  )
+  print(summary(growth_ordinal))
+} else {
+  cat("Insufficient data for ordinal regression (n <= 50).\n")
+}
+```
+
+# 5. Key Metrics
+
+Summarize average growth scores by AI adoption level and the proportion of growing jobs by industry and AI adoption.
+
+```{r key-metrics}
+cat("\nKey Metrics:\n")
+cat("Average growth score by AI level:\n")
+ro1_data %>%
+  group_by(AI_Adoption) %>%
+  summarise(Mean_Growth = mean(Growth_Score)) %>%
+  print()
+
+cat("\nIndustry breakdown:\n")
+ro1_data %>%
+  group_by(Industry, AI_Adoption) %>%
+  summarise(Prop_Growth = mean(Growth_Score > 0), .groups = "drop") %>%
+  arrange(Industry, AI_Adoption) %>%
+  print(n = Inf)
+```
+
+# 6. Export Results
+
+Save the processed dataset and visualization outputs.
+
+```{r export}
+write_csv(ro1_data, "ro1_processed_data.csv")
+ggsave("growth_proportion.png", width = 8, height = 6)
+ggsave("growth_score_distribution.png", width = 8, height = 6)
+```
+
+# Conclusion
+
+The analysis suggests that AI_Adoption (independent variable) has a nuanced but not statistically significant impact on Job_Growth_Projection (dependent variable), with a chi-squared p-value of 0.667 and weak ordinal regression coefficients. Growth scores remain balanced across AI adoption levels (Low: 0.052, Medium: 0, High: -0.061), indicating stable job markets. Industries like Transportation (0.636 at medium AI adoption) and Finance (0.579 at low AI adoption) show promising growth, highlighting opportunities for job expansion in AI-integrated sectors. Further exploration of industry-specific factors could unlock additional growth potential.
