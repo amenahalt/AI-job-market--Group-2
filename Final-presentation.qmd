@@ -48,6 +48,182 @@ Rapid AI integration is reshaping job roles and required skill sets. Organizatio
 - **For Policymakers:** Informs education and workforce policies to support an AI-driven economy.
 
 
+## Prompt: RO2 Roles most impacted by AI and drivers of demand {transition="zoom"}
+
+**Prompt:** 
+We are going to do some data cleaning with some inspection, conversion and create the risk score. Make sure the data is ready to use, no missing date...
+
+::: incremental
+- **Automation_Risk** Level of risk (High, Medium, Low)
+- **Demand_Level** (Growth = HIgh, Stable = Medium, Decline = Low)
+:::
+
+```{r}
+# # First, I load the packages I will be using 
+library(tidyverse)
+library(dplyr)
+library(ggplot2)
+
+# Read the csv file
+library(readr)
+ai_job <- read_csv("ai_job_market_insights 2.csv")
+View(ai_job)
+
+# Inspect Data 
+head(ai_job)
+str(ai_job)
+summary(ai_job)
+
+# Data Wrangling , 1st convert categorical variables to factors, allow for better categorical analysis 
+ai_job <- ai_job %>%
+  mutate(Job_Title = as.factor(Job_Title),
+         Industry = as.factor(Industry),
+         Company_Size = Company_Size,
+         Location = as.factor(Location),
+         AI_Adoption_Level = as.factor(AI_Adoption_Level),
+         Automation_Risk = as.factor(Automation_Risk),
+         Remote_Friendly = as.factor(Remote_Friendly),
+         Job_Growth_Projection = as.factor(Job_Growth_Projection)
+  )
+print(ai_job)
+
+
+# Check for the missing data
+colSums(is.na(ai_job))
+
+# Result shows there are no missing data
+
+# Now we are going to create a risk score (High scores = HIgh risk) based on the Automation_Risk , it helps quantify the risk level for comparison
+ai_job <- ai_job %>%
+  mutate(Automation_Risk_Score = case_when(Automation_Risk == "Low" ~ 1,
+                                     Automation_Risk == "Medium" ~ 2,
+                                     Automation_Risk == "High" ~ 3
+                                     ))
+# Next, we will create a demand indicator based on Job_Growth_Projection , simplifies the growth project into a three tier demand scale 
+ai_job <- ai_job %>%
+  mutate(Demand_Level = case_when(
+    Job_Growth_Projection == "Growth" ~ "High",
+    Job_Growth_Projection == "Stable" ~ "Medium",
+    Job_Growth_Projection == "Decline" ~ "Low"
+  ))
+```
+
+# Prompt: To Indentify which jobs are the most effected by AI {transition="zoom"}
+
+**Prompt:**
+ We can look at the combination of AI_Adoption_Level and Automation_Risk_Scores, focusing jobs with high adoption and high automation risk.
+
+::: incremental 
+- **UX/UI Designers** High Risk
+- **Project Manager** Low risk 
+- **Marketing Specialist** Low (Automation, Adoption Level)
+:::
+
+```{r}
+# Group by Job_Title and summarize AI_Impact
+ai_impact <- ai_job %>%
+  group_by(Job_Title) %>%
+  summarise(
+    Avg_Automation_Risk = mean(Automation_Risk_Score),
+    High_Risk_Count = sum(Automation_Risk == "High"),
+    AI_Adoption_High = sum(AI_Adoption_Level == "High"),
+    Total_Jobs = n()
+  ) %>%
+  arrange(desc(Avg_Automation_Risk))
+
+# View top jobs with highest automation risk
+print(ai_impact)
+
+# Focus on specific roles (e.g., UX Designer, Project Manager, Marketing Specialist)
+target_jobs <- c("UX Designer", "Project Manager", "Marketing Specialist")
+ai_impact_target <- ai_impact %>% filter(Job_Title %in% target_jobs)
+print(ai_impact_target)
+```
+
+::: {.note} 
+Speaker notes: Jobs with a higher Avg_Automation_Risk and significant HIgh_Risk_Count where AI_Adoption_Level is High are most impacted, ( Ex: UX Designer and Marketing Specialist may show elevated risk due to tasks like design automation / ad targeting being AI driven)
+:::
+
+# Prompt:  Next we will determine why some jobs are in demand {transition="zoom"}
+
+**Prompt:** 
+we will analyze Demand_Level along side Salary_USD, Remoted_Friendly, and required skills
+
+
+
+```{r}
+# Analyze demand by job title
+demand_analysis <- ai_job %>%
+  group_by(Job_Title, Demand_Level) %>%
+  summarise(
+    Avg_Salary = mean(Salary_USD),
+    Remote_Percent = mean(Remote_Friendly == "Yes") * 100,
+    Total_Jobs = n()
+  ) %>%
+  arrange(Job_Title, desc(Demand_Level))
+
+# View demand trends
+print(demand_analysis)
+
+# Visualize demand vs. salary and remote work
+ggplot(demand_analysis, aes(x = Avg_Salary, y = Remote_Percent, color = Demand_Level, size = Total_Jobs)) +
+  geom_point() +
+  labs(title = "Job Demand vs. Salary and Remote Work", x = "Average Salary (USD)", y = "Percentage Remote Friendly") +
+  theme_minimal()
+```
+
+:::{.notes} 
+Speaker notes: # Roles like Operation Manager / Sale Manager with flow automation risk and stable/growing demand might be safer, possibly due to human-centric skills( Communication, Project Manager) that AI struggles to replicate.
+:::
+
+# Promt: Explore Influence of Pay and Remote Work {transition="zoom"}
+
+**Prompt:**
+we can comapre these factors across demand levels)
+
+::: incremental
+- **Salary** Marketing Professionals average 92,978, Project Managers 92,342, and UX/UI Designers $87,898. Despite higher pay, Marketing declines, while Project Managers grow, suggesting pay isn’t the driver.
+- **Remote Work** Work: 63% of Marketing roles, 57% of Project Manager roles, and 47% of UX/UI Designer roles are remote-friendly. Yet, Marketing declines despite high remote availability, while Project Managers grow with moderate remote options.
+:::
+
+
+```{r}
+# Compare salary and remote work by demand
+pay_remote_demand <- ai_job %>%
+  group_by(Demand_Level) %>%
+  summarise(
+    Avg_Salary = mean(Salary_USD),
+    Remote_Percent = mean(Remote_Friendly == "Yes") * 100,
+    Job_Count = n()
+  )
+
+print(pay_remote_demand)
+
+# Visualize
+ggplot(pay_remote_demand, aes(x = Demand_Level, y = Avg_Salary, fill = Remote_Percent)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Average Salary by Demand Level with Remote Work Influence", x = "Demand Level", y = "Average Salary (USD)") +
+  theme_minimal() +
+  scale_fill_gradient(low = "lightblue", high = "darkblue")
+```
+
+# Prompt: To Concluse this RO {transition="zoom"}
+
+::: incremental
+- **Jobs Hit Hardest**: UX Designers and Marketing Specialists show higher automation risk, especially in industries with high AI adoption (e.g., Technology, Retail), due to AI’s ability to automate design and marketing tasks.
+- **Jobs in Demand** AI Researchers and Cybersecurity Analysts are in demand, likely due to specialized skills (e.g., Machine Learning, Cyber security) that require human expertise AI can’t fully replace yet. • Safer Jobs: Roles with low automation risk and stable/growing demand (e.g., Operations Manager, HR Manager) rely on interpersonal skills, suggesting human judgment remains key. • - - **Pay and Remote Work**: Higher salaries and remote-friendly options correlate with demand, possibly reflecting companies’ efforts to retain talent in AI-vulnerable or high-skill roles.
+:::
+
+
+
+
+
+
+
+
+
+
+
 
 # RQ3 / H3
 
