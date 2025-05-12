@@ -202,6 +202,122 @@ Amenah Altamimi, Bryant Ha, Shaza Mumtaz
 </div>
 </div>
 </section>
+<section id="sample-characteristics" class="slide level2" data-transition="fade">
+<h2>Sample Characteristics</h2>
+<ul>
+<li><strong>Population:</strong> All job listings from 2020–2025 across multiple industries<br>
+</li>
+<li><strong>Sample:</strong> Filtered to records with non-missing AI adoption and growth projections</li>
+<li><strong>Industries covered:</strong> Finance, Technology, Healthcare, Manufacturing, etc.</li>
+</ul>
+</section>
+<section id="research-questions-hypotheses" class="slide level2" data-transition="fade">
+<h2>Research Questions &amp; Hypotheses</h2>
+<ul>
+<li><strong>RQ1 / H1:</strong> Does AI adoption level affect job growth projections?<br>
+</li>
+<li><strong>RQ2 / H2:</strong> Which job roles are most impacted by AI and why?<br>
+</li>
+<li><strong>RQ3 / H3:</strong> What skills are most in demand, and how does remote vs.&nbsp;in-person work influence those requirements?</li>
+</ul>
+</section>
+<section id="rq1-h1" class="slide level2">
+<h2><strong>RQ1 / H1:</strong></h2>
+<p><strong>H1:</strong> Does AI adoption level affect job growth projections?<br>
+<strong>RO1:</strong> Assess the impact of AI adoption on overall job growth or decline.</p>
+</section>
+<section id="variables-their-roles" class="slide level2 scrollable">
+<h2>Variables &amp; Their Roles</h2>
+<div style="font-size:0.9em; width:90vw; margin:auto;">
+<table class="caption-top">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 45%">
+<col style="width: 29%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th>Type</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>AI_Adoption_Level</td>
+<td>Ordered factor (Low, Medium, High)</td>
+<td>Independent Variable</td>
+</tr>
+<tr class="even">
+<td>Growth_Score</td>
+<td>Numeric (-1, 0, +1)</td>
+<td>Dependent Variable</td>
+</tr>
+<tr class="odd">
+<td>Required_Skills</td>
+<td>Categorical list</td>
+<td>Dependent (frequency)</td>
+</tr>
+<tr class="even">
+<td>Remote</td>
+<td>Categorical (Remote / In-Person)</td>
+<td>Independent Variable</td>
+</tr>
+<tr class="odd">
+<td>Industry</td>
+<td>Categorical</td>
+<td>Independent Variable</td>
+</tr>
+<tr class="even">
+<td>Salary_Bin</td>
+<td>Categorical (High Salary / Low Salary)</td>
+<td>Independent Variable</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="operationalization-of-the-scale" class="slide level2" data-transition="zoom">
+<h2>Operationalization of the Scale</h2>
+<ul>
+<li><strong>AI_Adoption_Level:</strong> Mapped to 1–3 (Low=1, Medium=2, High=3)<br>
+</li>
+<li><strong>Growth_Score:</strong> Decline = –1; Stable = 0; Growth = +1<br>
+</li>
+<li><strong>Required_Skills:</strong> Split multi-skill entries into single rows, counted frequencies<br>
+</li>
+<li><strong>Remote:</strong> Derived from <code>Remote_Friendly</code> (“Yes” → Remote; “No” → In-Person)<br>
+</li>
+<li><strong>Salary_Bin:</strong> Above vs.&nbsp;below median <code>Salary_USD</code></li>
+</ul>
+</section>
+<section id="data-wrangling-1" class="slide level2" data-transition="fade">
+<h2>Data Wrangling</h2>
+<ol type="1">
+<li>Loaded raw CSV via <code>read_csv()</code><br>
+</li>
+<li>Filtered out missing values in key fields<br>
+</li>
+<li>Converted relevant columns to factors and created <code>Growth_Score</code><br>
+</li>
+<li>Separated <code>Required_Skills</code> into individual records</li>
+</ol>
+</section>
+<section id="data-visualization" class="slide level2" data-transition="fade">
+<h2>Data Visualization</h2>
+</section>
+<section id="summary-findings" class="slide level2" data-transition="zoom">
+<h2>Summary Findings</h2>
+<ul>
+<li>No significant association between AI adoption and job growth (χ² p &gt; 0.05)<br>
+</li>
+<li>Remote roles skew technical (Python, Cloud Architecture); in-person skew soft skills (Communication, Teamwork)<br>
+</li>
+<li>Transportation &amp; Finance show strongest growth at medium AI adoption<br>
+</li>
+<li><strong>Business takeaway:</strong> Tailor upskilling and hiring to skill demands by work mode and industry</li>
+</ul>
+</section>
 <section id="ro2-roles-most-impacted-by-ai-and-drivers-of-demand" class="slide level2" data-transition="zoom">
 <h2>RO2: Roles Most Impacted by AI and Drivers of Demand</h2>
 <p><strong>Prompt:</strong><br>
@@ -457,7 +573,7 @@ Job_Growth_Projection                Remote            Salary_Bin
 </div>
 </section></section>
 <section>
-<section id="operationalization-of-the-scale" class="title-slide slide level1 center">
+<section id="operationalization-of-the-scale-1" class="title-slide slide level1 center">
 <h1>Operationalization of the Scale</h1>
 <ul>
 <li><strong>Required_Skills:</strong> Each skill listed in <code>Required_Skills</code> is split into one row per skill; frequency counts measure demand.<br>
@@ -469,7 +585,7 @@ Job_Growth_Projection                Remote            Salary_Bin
 <li><strong>Salary_Bin:</strong> Binned at the median <code>Salary_USD</code>; above = “High Salary”, below = “Low Salary”.</li>
 </ul>
 </section>
-<section id="data-wrangling-1" class="slide level2 scrollable">
+<section id="data-wrangling-2" class="slide level2 scrollable">
 <h2>Data Wrangling</h2>
 <div class="cell">
 <div class="cell-output-display">
@@ -559,7 +675,7 @@ Job_Growth_Projection                Remote            Salary_Bin
 </div>
 </section></section>
 <section>
-<section id="data-visualization" class="title-slide slide level1 center">
+<section id="data-visualization-1" class="title-slide slide level1 center">
 <h1>Data Visualization</h1>
 
 </section>
@@ -576,7 +692,7 @@ Job_Growth_Projection                Remote            Salary_Bin
 
 <img data-src="Final-presentation_files/figure-revealjs/viz-salary-1.png" width="960" class="r-stretch"></section></section>
 <section>
-<section id="summary-findings" class="title-slide slide level1 center">
+<section id="summary-findings-1" class="title-slide slide level1 center">
 <h1>Summary Findings</h1>
 <ul>
 <li><strong>Remote vs.&nbsp;In-Person:</strong> Remote roles demand more technical skills (e.g., <em>Python</em>, <em>Cloud Architecture</em>), whereas in-person roles emphasize soft skills (e.g., <em>Communication</em>, <em>Teamwork</em>).<br>
