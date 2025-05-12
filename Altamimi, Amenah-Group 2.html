@@ -135,11 +135,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 2) Read the CSV </span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"ai_job_market_insights.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Rows: 500 Columns: 10
+<pre><code>Rows: 500 Columns: 12
 ── Column specification ────────────────────────────────────────────────────────
 Delimiter: ","
-chr (9): Job_Title, Industry, Company_Size, Location, AI_Adoption_Level, Aut...
-dbl (1): Salary_USD
+chr (11): Job_Title, Industry, Company_Size, Location, AI_Adoption_Level, Au...
+dbl  (1): Salary_USD
 
 ℹ Use `spec()` to retrieve the full column specification for this data.
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
@@ -148,7 +148,7 @@ dbl (1): Salary_USD
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 500
-Columns: 10
+Columns: 12
 $ Job_Title             &lt;chr&gt; "Cybersecurity Analyst", "Marketing Specialist",…
 $ Industry              &lt;chr&gt; "Entertainment", "Technology", "Technology", "Re…
 $ Company_Size          &lt;chr&gt; "Small", "Large", "Large", "Small", "Small", "La…
@@ -158,7 +158,9 @@ $ Automation_Risk       &lt;chr&gt; "High", "High", "High", "High", "Low", "Medi
 $ Required_Skills       &lt;chr&gt; "UX/UI Design", "Marketing", "UX/UI Design", "Pr…
 $ Salary_USD            &lt;dbl&gt; 111392.17, 93792.56, 107170.26, 93027.95, 87752.…
 $ Remote_Friendly       &lt;chr&gt; "Yes", "No", "Yes", "No", "Yes", "No", "Yes", "Y…
-$ Job_Growth_Projection &lt;chr&gt; "Growth", "Decline", "Growth", "Growth", "Declin…</code></pre>
+$ Job_Growth_Projection &lt;chr&gt; "Growth", "Decline", "Growth", "Growth", "Declin…
+$ Remote                &lt;chr&gt; "Remote", "In-Person", "Remote", "In-Person", "R…
+$ Salary_Bin            &lt;chr&gt; "High Salary", "High Salary", "High Salary", "Hi…</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -176,13 +178,13 @@ $ Job_Growth_Projection &lt;chr&gt; "Growth", "Decline", "Growth", "Growth", "De
                                                           Mean   : 91222  
                                                           3rd Qu.:103971  
                                                           Max.   :155210  
- Remote_Friendly    Job_Growth_Projection
- Length:500         Length:500           
- Class :character   Class :character     
- Mode  :character   Mode  :character     
-                                         
-                                         
-                                         </code></pre>
+ Remote_Friendly    Job_Growth_Projection    Remote           Salary_Bin       
+ Length:500         Length:500            Length:500         Length:500        
+ Class :character   Class :character      Class :character   Class :character  
+ Mode  :character   Mode  :character      Mode  :character   Mode  :character  
+                                                                               
+                                                                               
+                                                                               </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 4) Basic cleaning: remove exact duplicates &amp; rows missing critical info</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>df_clean <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
@@ -249,7 +251,7 @@ $ Salary_Bin            &lt;chr&gt; "High Salary", "High Salary", "High Salary",
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 7) (Optional) Save cleaned long‐format data</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(df_skills, <span class="st">"ai_job_market_insights_long.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>week15</p>
+<p>week155</p>
 </section>
 
 </main>
