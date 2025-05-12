@@ -28,71 +28,6 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
-    /* CSS for syntax highlighting */
-    pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { line-height: 1.25; }
-    pre > code.sourceCode > span:empty { height: 1.2em; }
-    .sourceCode { overflow: visible; }
-    code.sourceCode > span { color: inherit; text-decoration: inherit; }
-    div.sourceCode { margin: 1em 0; }
-    pre.sourceCode { margin: 0; }
-    @media screen {
-    div.sourceCode { overflow: auto; }
-    }
-    @media print {
-    pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-    }
-    pre.numberSource code
-      { counter-reset: source-line 0; }
-    pre.numberSource code > span
-      { position: relative; left: -4em; counter-increment: source-line; }
-    pre.numberSource code > span > a:first-child::before
-      { content: counter(source-line);
-        position: relative; left: -1em; text-align: right; vertical-align: baseline;
-        border: none; display: inline-block;
-        -webkit-touch-callout: none; -webkit-user-select: none;
-        -khtml-user-select: none; -moz-user-select: none;
-        -ms-user-select: none; user-select: none;
-        padding: 0 4px; width: 4em;
-        color: #aaaaaa;
-      }
-    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-    div.sourceCode
-      { color: #003b4f; background-color: #f1f3f5; }
-    @media screen {
-    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-    }
-    code span { color: #003b4f; } /* Normal */
-    code span.al { color: #ad0000; } /* Alert */
-    code span.an { color: #5e5e5e; } /* Annotation */
-    code span.at { color: #657422; } /* Attribute */
-    code span.bn { color: #ad0000; } /* BaseN */
-    code span.bu { } /* BuiltIn */
-    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
-    code span.ch { color: #20794d; } /* Char */
-    code span.cn { color: #8f5902; } /* Constant */
-    code span.co { color: #5e5e5e; } /* Comment */
-    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
-    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
-    code span.dt { color: #ad0000; } /* DataType */
-    code span.dv { color: #ad0000; } /* DecVal */
-    code span.er { color: #ad0000; } /* Error */
-    code span.ex { } /* Extension */
-    code span.fl { color: #ad0000; } /* Float */
-    code span.fu { color: #4758ab; } /* Function */
-    code span.im { color: #00769e; } /* Import */
-    code span.in { color: #5e5e5e; } /* Information */
-    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
-    code span.op { color: #5e5e5e; } /* Operator */
-    code span.ot { color: #003b4f; } /* Other */
-    code span.pp { color: #ad0000; } /* Preprocessor */
-    code span.sc { color: #5e5e5e; } /* SpecialChar */
-    code span.ss { color: #20794d; } /* SpecialString */
-    code span.st { color: #20794d; } /* String */
-    code span.va { color: #111111; } /* Variable */
-    code span.vs { color: #20794d; } /* VerbatimString */
-    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="Final-presentation_files/libs/revealjs/dist/theme/quarto-d58ca6e55452da357bd4996cb6e3aa10.css">
   <link rel="stylesheet" href="theme.scss">
@@ -206,11 +141,6 @@ Amenah Altamimi, Bryant Ha, Shaza Mumtaz
 </div>
 
 </section>
-<section>
-<section id="ai-the-future-of-work-skills-demand-insights" class="title-slide slide level1 center">
-<h1>AI &amp; the Future of Work: Skills Demand Insights</h1>
-<p><em>Amenah Altamimi, Bryant Ha, Shaza Mumtaz</em></p>
-</section>
 <section id="table-of-contents" class="slide level2">
 <h2>Table of Contents</h2>
 <ul>
@@ -218,6 +148,8 @@ Amenah Altamimi, Bryant Ha, Shaza Mumtaz
 <li>Problem Definition</li>
 <li>Research Objectives</li>
 <li>Importance of the Research</li>
+<li>Population &amp; Sample Collection</li>
+<li>R02: Identify which job roles are most affected by AI</li>
 <li>RO3: Skills Demand Insights</li>
 </ul>
 </section>
@@ -244,15 +176,248 @@ Amenah Altamimi, Bryant Ha, Shaza Mumtaz
 <li><strong>For Employees:</strong> Clarifies skill development pathways for career resilience.</li>
 <li><strong>For Policymakers:</strong> Informs education and workforce policies to support an AI-driven economy.</li>
 </ul>
-</section></section>
+</section>
+<section id="population-samplingdata-collection" class="slide level2" data-transition="zoom">
+<h2>Population &amp; Sampling/Data Collection</h2>
+<p>All professional job roles (focus: UX/UI designers, project managers, marketing professionals) globally or in the U.S., across industries (tech, marketing, etc.), from 2020–2025.</p>
+<p>The current convenience sample and pre-compiled data provide a starting point, but stratified random sampling and enhanced, diverse collection methods would strengthen reliability and address the topic’s significance.</p>
+</section>
+<section id="data-wrangling" class="slide level2" data-transition="fade">
+<h2>Data Wrangling</h2>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>tibble [500 × 12] (S3: tbl_df/tbl/data.frame)
+ $ Job_Title            : chr [1:500] "Cybersecurity Analyst" "Marketing Specialist" "AI Researcher" "Sales Manager" ...
+ $ Industry             : chr [1:500] "Entertainment" "Technology" "Technology" "Retail" ...
+ $ Company_Size         : chr [1:500] "Small" "Large" "Large" "Small" ...
+ $ Location             : chr [1:500] "Dubai" "Singapore" "Singapore" "Berlin" ...
+ $ AI_Adoption_Level    : Factor w/ 3 levels "Low","Medium",..: 2 2 2 1 1 2 1 2 3 3 ...
+ $ Automation_Risk      : chr [1:500] "High" "High" "High" "High" ...
+ $ Required_Skills      : chr [1:500] "UX/UI Design" "Marketing" "UX/UI Design" "Project Management" ...
+ $ Salary_USD           : num [1:500] 111392 93793 107170 93028 87753 ...
+ $ Remote_Friendly      : chr [1:500] "Yes" "No" "Yes" "No" ...
+ $ Job_Growth_Projection: Factor w/ 3 levels "Decline","Stable",..: 3 1 3 3 1 3 3 1 2 1 ...
+ $ Remote               : chr [1:500] "Remote" "In-Person" "Remote" "In-Person" ...
+ $ Salary_Bin           : chr [1:500] "High Salary" "High Salary" "High Salary" "High Salary" ...</code></pre>
+</div>
+</div>
+</section>
+<section id="ro2-roles-most-impacted-by-ai-and-drivers-of-demand" class="slide level2" data-transition="zoom">
+<h2>RO2: Roles Most Impacted by AI and Drivers of Demand</h2>
+<p><strong>Prompt:</strong><br>
+We will do some Data Cleaning to prepare, and create demand indicator and risk scores.</p>
+<h3 id="overview">Overview</h3>
+<div>
+<ul>
+<li class="fragment">Investigate job roles’ vulnerability to AI automation.</li>
+<li class="fragment">Analyze drivers of demand (e.g., salary, remote work).</li>
+<li class="fragment">Use R to quantify automation risk and demand trends.</li>
+</ul>
+</div>
+</section>
+<section id="data-preparation-loading-libraries" class="slide level2" data-transition="fade">
+<h2>Data Preparation: Loading Libraries</h2>
+<h3 id="setup">Setup</h3>
+<div>
+<ul>
+<li class="fragment">Load <code>tidyverse</code>, <code>dplyr</code>, <code>ggplot2</code>, and <code>readr</code> for wrangling and visualization.</li>
+<li class="fragment">Ensure consistent, reproducible analysis.</li>
+</ul>
+</div>
+</section>
+<section id="readinspect-the-data-conversion" class="slide level2" data-transition="fade">
+<h2>Read,Inspect the data &amp; Conversion</h2>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 12
+  Job_Title     Industry Company_Size Location AI_Adoption_Level Automation_Risk
+  &lt;chr&gt;         &lt;chr&gt;    &lt;chr&gt;        &lt;chr&gt;    &lt;chr&gt;             &lt;chr&gt;          
+1 Cybersecurit… Enterta… Small        Dubai    Medium            High           
+2 Marketing Sp… Technol… Large        Singapo… Medium            High           
+3 AI Researcher Technol… Large        Singapo… Medium            High           
+4 Sales Manager Retail   Small        Berlin   Low               High           
+5 Cybersecurit… Enterta… Small        Tokyo    Low               Low            
+6 UX Designer   Educati… Large        San Fra… Medium            Medium         
+# ℹ 6 more variables: Required_Skills &lt;chr&gt;, Salary_USD &lt;dbl&gt;,
+#   Remote_Friendly &lt;chr&gt;, Job_Growth_Projection &lt;chr&gt;, Remote &lt;chr&gt;,
+#   Salary_Bin &lt;chr&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 500
+Columns: 12
+$ Job_Title             &lt;chr&gt; "Cybersecurity Analyst", "Marketing Specialist",…
+$ Industry              &lt;chr&gt; "Entertainment", "Technology", "Technology", "Re…
+$ Company_Size          &lt;chr&gt; "Small", "Large", "Large", "Small", "Small", "La…
+$ Location              &lt;chr&gt; "Dubai", "Singapore", "Singapore", "Berlin", "To…
+$ AI_Adoption_Level     &lt;chr&gt; "Medium", "Medium", "Medium", "Low", "Low", "Med…
+$ Automation_Risk       &lt;chr&gt; "High", "High", "High", "High", "Low", "Medium",…
+$ Required_Skills       &lt;chr&gt; "UX/UI Design", "Marketing", "UX/UI Design", "Pr…
+$ Salary_USD            &lt;dbl&gt; 111392.17, 93792.56, 107170.26, 93027.95, 87752.…
+$ Remote_Friendly       &lt;chr&gt; "Yes", "No", "Yes", "No", "Yes", "No", "Yes", "Y…
+$ Job_Growth_Projection &lt;chr&gt; "Growth", "Decline", "Growth", "Growth", "Declin…
+$ Remote                &lt;chr&gt; "Remote", "In-Person", "Remote", "In-Person", "R…
+$ Salary_Bin            &lt;chr&gt; "High Salary", "High Salary", "High Salary", "Hi…</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Job_Title           Industry         Company_Size         Location        
+ Length:500         Length:500         Length:500         Length:500        
+ Class :character   Class :character   Class :character   Class :character  
+ Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+                                                                            
+                                                                            
+                                                                            
+ AI_Adoption_Level  Automation_Risk    Required_Skills      Salary_USD    
+ Length:500         Length:500         Length:500         Min.   : 31970  
+ Class :character   Class :character   Class :character   1st Qu.: 78512  
+ Mode  :character   Mode  :character   Mode  :character   Median : 91998  
+                                                          Mean   : 91222  
+                                                          3rd Qu.:103971  
+                                                          Max.   :155210  
+ Remote_Friendly    Job_Growth_Projection    Remote           Salary_Bin       
+ Length:500         Length:500            Length:500         Length:500        
+ Class :character   Class :character      Class :character   Class :character  
+ Mode  :character   Mode  :character      Mode  :character   Mode  :character  
+                                                                               
+                                                                               
+                                                                               </code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            Job_Title              Industry          Company_Size 
+                    0                     0                     0 
+             Location     AI_Adoption_Level       Automation_Risk 
+                    0                     0                     0 
+      Required_Skills            Salary_USD       Remote_Friendly 
+                    0                     0                     0 
+Job_Growth_Projection                Remote            Salary_Bin 
+                    0                     0                     0 </code></pre>
+</div>
+</div>
+</section>
+<section id="create-a-risk-scores-demand-level" class="slide level2" data-transition="fade">
+<h2>Create a risk scores &amp; Demand Level</h2>
+<div class="increnental">
+<p>Based on Demand Level and Automation Risk - <strong>Variables</strong>: Independent: AI_Adoption_Level (Low=1, Medium=2, High=3). Dependent: Automation_Risk (Low=1, Medium=2, High=3)</p>
+</div>
+</section>
+<section id="job-most-impacted-by-ai" class="slide level2" data-transition="zoom">
+<h2>Job Most Impacted by AI</h2>
+<p>Prompt: Identify which jobs are the most affected by AI</p>
+<div>
+<ul>
+<li class="fragment"><strong>Variables</strong>: Independent: AI_Adoption_Level (Low=1, Medium=2, High=3). Dependent: Automation_Risk (Low=1, Medium=2, High=3).</li>
+<li class="fragment"><strong>Approach</strong>: Summarize automation risk by job title, focusing on high AI adoption.</li>
+<li class="fragment"><strong>Findings</strong>: UX Designers and Marketing Specialists face high automation risk in high-AI industries (e.g., Technology).</li>
+</ul>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 4
+   Job_Title             Avg_Automation_Risk High_Risk_Count AI_Adoption_High
+   &lt;fct&gt;                               &lt;dbl&gt;           &lt;int&gt;            &lt;int&gt;
+ 1 Marketing Specialist                 2.15              17               16
+ 2 UX Designer                          2.11              16               15
+ 3 Product Manager                      2.10              16               14
+ 4 AI Researcher                        2.10              20               15
+ 5 Software Engineer                    2.05              15               13
+ 6 Sales Manager                        2.04              20               16
+ 7 Cybersecurity Analyst                2.04              23               15
+ 8 HR Manager                           1.98              15               14
+ 9 Data Scientist                       1.87              17               21
+10 Operations Manager                   1.82              10                8</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 4
+   Job_Title             Avg_Automation_Risk High_Risk_Count AI_Adoption_High
+   &lt;fct&gt;                               &lt;dbl&gt;           &lt;int&gt;            &lt;int&gt;
+ 1 Marketing Specialist                 2.15              17               16
+ 2 UX Designer                          2.11              16               15
+ 3 Product Manager                      2.10              16               14
+ 4 AI Researcher                        2.10              20               15
+ 5 Software Engineer                    2.05              15               13
+ 6 Sales Manager                        2.04              20               16
+ 7 Cybersecurity Analyst                2.04              23               15
+ 8 HR Manager                           1.98              15               14
+ 9 Data Scientist                       1.87              17               21
+10 Operations Manager                   1.82              10                8</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 4
+  Job_Title            Avg_Automation_Risk High_Risk_Count AI_Adoption_High
+  &lt;fct&gt;                              &lt;dbl&gt;           &lt;int&gt;            &lt;int&gt;
+1 Marketing Specialist                2.15              17               16
+2 UX Designer                         2.11              16               15</code></pre>
+</div>
+</div>
+</section>
+<section id="demand-trends" class="slide level2" data-transition="“zoom”">
+<h2>Demand Trends</h2>
+<p>Prompt: The Demand Trend.</p>
+<div>
+<ul>
+<li class="fragment"><strong>Variables</strong>: Independent: Salary_USD (continuous). Dependent: Demand_Level (High, Medium, Low).</li>
+<li class="fragment"><strong>Approach</strong>: Analyze demand by job title, focusing on stable/growing roles.</li>
+<li class="fragment"><strong>Findings</strong>: Project Manager and AI Researcher show high/medium demand.Human-centric skills (e.g., communication) and specialized expertise (e.g., machine learning) resist automation.</li>
+</ul>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 30 × 5
+# Groups:   Job_Title [10]
+   Job_Title             Demand_Level Avg_Salary Remote_Percent Total_Jobs
+   &lt;fct&gt;                 &lt;chr&gt;             &lt;dbl&gt;          &lt;dbl&gt;      &lt;int&gt;
+ 1 AI Researcher         Medium           89284.           26.7         15
+ 2 AI Researcher         Low             101250.           43.8         16
+ 3 AI Researcher         High             95774.           35           20
+ 4 Cybersecurity Analyst Medium           90848.           68.2         22
+ 5 Cybersecurity Analyst Low              91203.           57.9         19
+ 6 Cybersecurity Analyst High             84792.           57.1         14
+ 7 Data Scientist        Medium           94639.           52.9         17
+ 8 Data Scientist        Low              93520.           56.5         23
+ 9 Data Scientist        High             86908.           54.5         22
+10 HR Manager            Medium           90879.           76.2         21
+# ℹ 20 more rows</code></pre>
+</div>
+
+</div>
+<img data-src="Final-presentation_files/figure-revealjs/unnamed-chunk-6-1.png" width="960" class="r-stretch"></section>
+<section id="pay-and-remote-work-influence" class="slide level2" data-transition="“zoom”">
+<h2>Pay and Remote Work Influence</h2>
+<p>Prompt: Explore Influence of Pay and Remote Work.</p>
+<div>
+<ul>
+<li class="fragment"><strong>Variables</strong>: Salary_USD, Remote_Friendly, Demand_Level.</li>
+<li class="fragment"><strong>Findings</strong>: Marketing Specialists ($93K, 60% remote) decline, while Project Managers ($92K, 55% remote) grow, suggesting skills drive demand over pay.</li>
+</ul>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 4
+  Demand_Level Avg_Salary Remote_Percent Job_Count
+  &lt;chr&gt;             &lt;dbl&gt;          &lt;dbl&gt;     &lt;int&gt;
+1 High             89975.           49.7       169
+2 Low              91934.           48.5       169
+3 Medium           91782.           52.5       162</code></pre>
+</div>
+</div>
+</section>
+<section id="visualization" class="slide level2" data-transition="“fade”">
+<h2>Visualization</h2>
+<p>Salary by Demand</p>
+
+<img data-src="Final-presentation_files/figure-revealjs/unnamed-chunk-8-1.png" width="960" class="r-stretch"></section>
+<section id="ro2-conclusions" class="slide level2" data-transition="“zoom”">
+<h2>RO2 Conclusions</h2>
+<p>Key Findings ::: incremental - <strong>High-Risk Jobs</strong>: UX Designers and Marketing Specialists face high automation risk in high-AI industries (e.g., Technology). - <strong>In-Demand Jobs</strong>: AI Researchers and Project Managers show stable/growing demand due to specialized and human-centric skills. - <strong>Pay/Remote Work</strong>: Higher salaries and remote options correlate with demand, but human judgment is critical. :::</p>
+</section>
+<section>
 <section id="rq3-h3" class="title-slide slide level1 center">
 <h1>RQ3 / H3</h1>
 <p><strong>Research Question 3 (RQ3):</strong> What skills are most in demand in an AI-driven job market, and how does remote work versus in-person work affect these skill requirements?</p>
 <p><strong>Hypothesis 3 (H3):</strong> The prevalence of certain skills differs significantly between remote and in-person roles, with technical skills (e.g., Python, Cloud Architecture) being more common in remote positions and soft skills (e.g., Communication, Teamwork) more common in in-person roles.</p>
 </section>
-
-<section id="variables-and-their-roles" class="title-slide slide level1 center">
-<h1>Variables and Their Roles</h1>
+<section id="variables-and-their-roles" class="slide level2 scrollable">
+<h2>Variables and Their Roles</h2>
+<div style="font-size:0.8em; width:90vw; margin:auto;">
 <table class="caption-top">
 <colgroup>
 <col style="width: 20%">
@@ -268,29 +433,30 @@ Amenah Altamimi, Bryant Ha, Shaza Mumtaz
 </thead>
 <tbody>
 <tr class="odd">
-<td>Required_Skills</td>
+<td><strong>Required_Skills</strong></td>
 <td>Dependent Variable (DV)</td>
 <td>Count of each individual skill extracted from job listings</td>
 </tr>
 <tr class="even">
-<td>Remote</td>
+<td><strong>Remote</strong></td>
 <td>Independent Variable 1</td>
 <td>Categorical: “Remote” vs.&nbsp;“In-Person”</td>
 </tr>
 <tr class="odd">
-<td>Industry</td>
+<td><strong>Industry</strong></td>
 <td>Independent Variable 2</td>
 <td>Categorical: sector of the job (e.g., Tech, Marketing)</td>
 </tr>
 <tr class="even">
-<td>Salary_Bin</td>
+<td><strong>Salary_Bin</strong></td>
 <td>Independent Variable 3</td>
 <td>Categorical: “High Salary” vs.&nbsp;“Low Salary”</td>
 </tr>
 </tbody>
 </table>
-</section>
-
+</div>
+</section></section>
+<section>
 <section id="operationalization-of-the-scale" class="title-slide slide level1 center">
 <h1>Operationalization of the Scale</h1>
 <ul>
@@ -303,40 +469,95 @@ Amenah Altamimi, Bryant Ha, Shaza Mumtaz
 <li><strong>Salary_Bin:</strong> Binned at the median <code>Salary_USD</code>; above = “High Salary”, below = “Low Salary”.</li>
 </ul>
 </section>
-
-<section id="data-wrangling" class="title-slide slide level1 center">
-<h1>Data Wrangling</h1>
+<section id="data-wrangling-1" class="slide level2 scrollable">
+<h2>Data Wrangling</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href=""></a></span>
-<span id="cb1-3"><a href=""></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"ai_job_market_insights.csv"</span>)</span>
-<span id="cb1-4"><a href=""></a></span>
-<span id="cb1-5"><a href=""></a><span class="co"># Clean, split skills, and create flags</span></span>
-<span id="cb1-6"><a href=""></a>ro3_data <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
-<span id="cb1-7"><a href=""></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(Required_Skills), <span class="sc">!</span><span class="fu">is.na</span>(Remote_Friendly), <span class="sc">!</span><span class="fu">is.na</span>(Industry), <span class="sc">!</span><span class="fu">is.na</span>(Salary_USD)) <span class="sc">%&gt;%</span></span>
-<span id="cb1-8"><a href=""></a>  <span class="fu">separate_rows</span>(Required_Skills, <span class="at">sep =</span> <span class="st">",</span><span class="sc">\\</span><span class="st">s*"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb1-9"><a href=""></a>  <span class="fu">mutate</span>(</span>
-<span id="cb1-10"><a href=""></a>    <span class="at">Remote     =</span> <span class="fu">if_else</span>(Remote_Friendly <span class="sc">==</span> <span class="st">"Yes"</span>, <span class="st">"Remote"</span>, <span class="st">"In-Person"</span>),</span>
-<span id="cb1-11"><a href=""></a>    <span class="at">Salary_Bin =</span> <span class="fu">if_else</span>(Salary_USD <span class="sc">&gt;</span> <span class="fu">median</span>(Salary_USD, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="st">"High Salary"</span>, <span class="st">"Low Salary"</span>)</span>
-<span id="cb1-12"><a href=""></a>  )</span>
-<span id="cb1-13"><a href=""></a></span>
-<span id="cb1-14"><a href=""></a><span class="co"># Select top 5 most common skills overall</span></span>
-<span id="cb1-15"><a href=""></a>top5_skills <span class="ot">&lt;-</span> ro3_data <span class="sc">%&gt;%</span></span>
-<span id="cb1-16"><a href=""></a>  <span class="fu">count</span>(Required_Skills, <span class="at">name =</span> <span class="st">"Total"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb1-17"><a href=""></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Total)) <span class="sc">%&gt;%</span></span>
-<span id="cb1-18"><a href=""></a>  <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">5</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb1-19"><a href=""></a>  <span class="fu">pull</span>(Required_Skills)</span>
-<span id="cb1-20"><a href=""></a></span>
-<span id="cb1-21"><a href=""></a><span class="co"># Subset to top 5</span></span>
-<span id="cb1-22"><a href=""></a>ro3_top5 <span class="ot">&lt;-</span> <span class="fu">filter</span>(ro3_data, Required_Skills <span class="sc">%in%</span> top5_skills)</span>
-<span id="cb1-23"><a href=""></a></span>
-<span id="cb1-24"><a href=""></a><span class="co"># Summary tables</span></span>
-<span id="cb1-25"><a href=""></a>remote_counts   <span class="ot">&lt;-</span> ro3_top5 <span class="sc">%&gt;%</span> <span class="fu">count</span>(Required_Skills, Remote,   <span class="at">name =</span> <span class="st">"Count"</span>)</span>
-<span id="cb1-26"><a href=""></a>industry_counts <span class="ot">&lt;-</span> ro3_top5 <span class="sc">%&gt;%</span> <span class="fu">count</span>(Required_Skills, Industry, <span class="at">name =</span> <span class="st">"Count"</span>)</span>
-<span id="cb1-27"><a href=""></a>salary_counts   <span class="ot">&lt;-</span> ro3_top5 <span class="sc">%&gt;%</span> <span class="fu">count</span>(Required_Skills, Salary_Bin, <span class="at">name =</span> <span class="st">"Count"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top">
+<caption>Top-5 Skills: Remote vs In-Person</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Required_Skills</th>
+<th style="text-align: left;">Remote</th>
+<th style="text-align: right;">Count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Cybersecurity</td>
+<td style="text-align: left;">In-Person</td>
+<td style="text-align: right;">29</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cybersecurity</td>
+<td style="text-align: left;">Remote</td>
+<td style="text-align: right;">29</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Data Analysis</td>
+<td style="text-align: left;">In-Person</td>
+<td style="text-align: right;">21</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Data Analysis</td>
+<td style="text-align: left;">Remote</td>
+<td style="text-align: right;">28</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Machine Learning</td>
+<td style="text-align: left;">In-Person</td>
+<td style="text-align: right;">24</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Machine Learning</td>
+<td style="text-align: left;">Remote</td>
+<td style="text-align: right;">28</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Project Management</td>
+<td style="text-align: left;">In-Person</td>
+<td style="text-align: right;">33</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Project Management</td>
+<td style="text-align: left;">Remote</td>
+<td style="text-align: right;">27</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Python</td>
+<td style="text-align: left;">In-Person</td>
+<td style="text-align: right;">32</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Python</td>
+<td style="text-align: left;">Remote</td>
+<td style="text-align: right;">28</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Sales</td>
+<td style="text-align: left;">In-Person</td>
+<td style="text-align: right;">23</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sales</td>
+<td style="text-align: left;">Remote</td>
+<td style="text-align: right;">26</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">UX/UI Design</td>
+<td style="text-align: left;">In-Person</td>
+<td style="text-align: right;">24</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">UX/UI Design</td>
+<td style="text-align: left;">Remote</td>
+<td style="text-align: right;">25</td>
+</tr>
+</tbody>
+</table>
 </div>
-</section>
-
+</div>
+</section></section>
 <section>
 <section id="data-visualization" class="title-slide slide level1 center">
 <h1>Data Visualization</h1>
@@ -354,11 +575,7 @@ Amenah Altamimi, Bryant Ha, Shaza Mumtaz
 <h2>Skills by Salary Tier</h2>
 
 <img data-src="Final-presentation_files/figure-revealjs/viz-salary-1.png" width="960" class="r-stretch"></section></section>
-<section id="modeling-optional" class="title-slide slide level1 center">
-<h1>Modeling (Optional)</h1>
-<p><em>(For further analysis, one could fit a multinomial logistic regression predicting skill demand by Remote, Industry, and Salary_Bin.)</em></p>
-</section>
-
+<section>
 <section id="summary-findings" class="title-slide slide level1 center">
 <h1>Summary Findings</h1>
 <ul>
@@ -368,8 +585,32 @@ Amenah Altamimi, Bryant Ha, Shaza Mumtaz
 </li>
 <li><strong>Salary Tier:</strong> High-paying positions require advanced skills like <em>AI Ethics</em> and <em>Cloud Architecture</em>; lower-paying roles rely on <em>MS Office</em> and <em>Basic SQL</em>.</li>
 </ul>
-
 </section>
+<section id="conclusion" class="slide level2 scrollable">
+<h2>Conclusion</h2>
+<div style="font-size:0.8em; line-height:1.2; width:90vw; margin:auto; max-height:80vh; overflow-y:auto;">
+<h3 id="key-findings">Key Findings</h3>
+<ul>
+<li><strong>Remote roles favor technical skills:</strong> Python, Cloud Architecture, Cybersecurity and Machine Learning top the list for fully remote positions.<br>
+</li>
+<li><strong>In-person roles emphasize soft skills:</strong> Communication, Teamwork and Project Management remain critical where on-site collaboration is required.<br>
+</li>
+<li><strong>Industry and pay tiers diverge:</strong> Tech industries and high-salary jobs demand advanced AI-related expertise; lower-paid and non-tech roles rely on foundational tools like MS Office and basic SQL.</li>
+</ul>
+<h3 id="implications-for-businesses">Implications for Businesses</h3>
+<ul>
+<li><strong>Targeted upskilling:</strong> Invest in AI/data training for remote teams and soft-skill workshops for in-house staff.<br>
+</li>
+<li><strong>Strategic hiring:</strong> Tailor job postings—highlight technical skills for remote, human-centric for on-site.<br>
+</li>
+<li><strong>Flexible work models:</strong> Leverage remote policies to access niche talent while preserving on-site culture.<br>
+</li>
+<li><strong>Workforce planning:</strong> Use these insights to forecast talent needs, align L&amp;D budgets, and shape long-term recruitment strategies.<br>
+</li>
+</ul>
+</div>
+
+</section></section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <p><img src="images/ccidm-cpp_logo.png" class="slide-logo"></p>

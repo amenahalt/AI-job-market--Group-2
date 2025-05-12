@@ -12,9 +12,6 @@ format:
     css: theme.scss
     logo: "images/ccidm-cpp_logo.png"
 ---
-# AI & the Future of Work: Skills Demand Insights
-
-*Amenah Altamimi, Bryant Ha, Shaza Mumtaz*
 
 
 ## Table of Contents
@@ -120,32 +117,31 @@ library(readr)
 ## Read,Inspect the data & Conversion {transition="fade"}
 
 ```{r}
-# Read the csv file
+# Read the CSV file
 library(readr)
 ai_job <- read_csv("ai_job_market_insights.csv")
-View(ai_job)
 
-# Inspect Data 
-head(ai_job)
-str(ai_job)
-summary(ai_job)
+# Inspect the data without X11
+head(ai_job)        # first few rows
+glimpse(ai_job)     # structure summary
+summary(ai_job)     # basic stats
 
-# Data Wrangling , 1st convert categorical variables to factors, allow for better categorical analysis 
+# Data Wrangling: convert categorical variables to factors
 ai_job <- ai_job %>%
-  mutate(Job_Title = as.factor(Job_Title),
-         Industry = as.factor(Industry),
-         Company_Size = Company_Size,
-         Location = as.factor(Location),
-         AI_Adoption_Level = as.factor(AI_Adoption_Level),
-         Automation_Risk = as.factor(Automation_Risk),
-         Remote_Friendly = as.factor(Remote_Friendly),
-         Job_Growth_Projection = as.factor(Job_Growth_Projection)
+  mutate(
+    Job_Title           = as.factor(Job_Title),
+    Industry            = as.factor(Industry),
+    Company_Size        = Company_Size,        # adjust if needed
+    Location            = as.factor(Location),
+    AI_Adoption_Level   = as.factor(AI_Adoption_Level),
+    Automation_Risk     = as.factor(Automation_Risk),
+    Remote_Friendly     = as.factor(Remote_Friendly),
+    Job_Growth_Projection = as.factor(Job_Growth_Projection)
   )
-print(ai_job)
 
+# Check for missing data
+colSums(is.na(ai_job))
 
-# Check for the missing data
-colSums(is.na(ai_job)) #No Missing data
 ```
 
 ---
@@ -292,14 +288,16 @@ Key Findings
 
 **Hypothesis 3 (H3):** The prevalence of certain skills differs significantly between remote and in-person roles, with technical skills (e.g., Python, Cloud Architecture) being more common in remote positions and soft skills (e.g., Communication, Teamwork) more common in in-person roles.
 
-# Variables and Their Roles
+## Variables and Their Roles {.scrollable}
 
+::: {style="font-size:0.8em; width:90vw; margin:auto;"}
 | Variable             | Role                    | Description                                               |
 |----------------------|-------------------------|-----------------------------------------------------------|
-| Required_Skills      | Dependent Variable (DV) | Count of each individual skill extracted from job listings |
-| Remote               | Independent Variable 1  | Categorical: "Remote" vs. "In-Person"                  |
-| Industry             | Independent Variable 2  | Categorical: sector of the job (e.g., Tech, Marketing)    |
-| Salary_Bin           | Independent Variable 3  | Categorical: "High Salary" vs. "Low Salary"            |
+| **Required_Skills**  | Dependent Variable (DV) | Count of each individual skill extracted from job listings |
+| **Remote**           | Independent Variable 1  | Categorical: “Remote” vs. “In-Person”                    |
+| **Industry**         | Independent Variable 2  | Categorical: sector of the job (e.g., Tech, Marketing)    |
+| **Salary_Bin**       | Independent Variable 3  | Categorical: “High Salary” vs. “Low Salary”               |
+:::
 
 # Operationalization of the Scale
 
@@ -308,37 +306,53 @@ Key Findings
 - **Industry:** Directly from `Industry` field; nominal categories.  
 - **Salary_Bin:** Binned at the median `Salary_USD`; above = "High Salary", below = "Low Salary".
 
-# Data Wrangling
 
-```{r data-wrangling, echo=TRUE, message=FALSE}
+## Data Wrangling {.scrollable}
+
+```{r}
 library(tidyverse)
 
+# Load raw data
 df <- read_csv("ai_job_market_insights.csv")
 
 # Clean, split skills, and create flags
 ro3_data <- df %>%
-  filter(!is.na(Required_Skills), !is.na(Remote_Friendly), !is.na(Industry), !is.na(Salary_USD)) %>%
+  filter(
+    !is.na(Required_Skills),
+    !is.na(Remote_Friendly),
+    !is.na(Industry),
+    !is.na(Salary_USD)
+  ) %>%
   separate_rows(Required_Skills, sep = ",\\s*") %>%
   mutate(
     Remote     = if_else(Remote_Friendly == "Yes", "Remote", "In-Person"),
-    Salary_Bin = if_else(Salary_USD > median(Salary_USD, na.rm = TRUE), "High Salary", "Low Salary")
+    Salary_Bin = if_else(
+      Salary_USD > median(Salary_USD, na.rm = TRUE),
+      "High Salary", 
+      "Low Salary"
+    )
   )
 
 # Select top 5 most common skills overall
 top5_skills <- ro3_data %>%
   count(Required_Skills, name = "Total") %>%
-  arrange(desc(Total)) %>%
-  slice_head(n = 5) %>%
+  slice_max(Total, n = 5) %>%
   pull(Required_Skills)
 
 # Subset to top 5
-ro3_top5 <- filter(ro3_data, Required_Skills %in% top5_skills)
-
-# Summary tables
+ro3_top5        <- ro3_data %>% filter(Required_Skills %in% top5_skills)
 remote_counts   <- ro3_top5 %>% count(Required_Skills, Remote,   name = "Count")
 industry_counts <- ro3_top5 %>% count(Required_Skills, Industry, name = "Count")
 salary_counts   <- ro3_top5 %>% count(Required_Skills, Salary_Bin, name = "Count")
+
+# Display the full Remote vs In-Person table
+knitr::kable(
+  remote_counts,
+  caption = "Top-5 Skills: Remote vs In-Person",
+  align   = c("l","l","r")
+)
 ```
+
 
 # Data Visualization
 
@@ -369,12 +383,23 @@ ggplot(salary_counts, aes(x = reorder(Required_Skills, Count), y = Count, fill =
   theme_minimal()
 ```
 
-# Modeling (Optional)
-
-*(For further analysis, one could fit a multinomial logistic regression predicting skill demand by Remote, Industry, and Salary_Bin.)*
-
 # Summary Findings
 
 - **Remote vs. In-Person:** Remote roles demand more technical skills (e.g., *Python*, *Cloud Architecture*), whereas in-person roles emphasize soft skills (e.g., *Communication*, *Teamwork*).  
 - **Industry Differences:** Tech roles favor *Machine Learning* and *Data Analysis*, while Marketing/Retail focus on *SEO* and *Creative Suite*.  
 - **Salary Tier:** High-paying positions require advanced skills like *AI Ethics* and *Cloud Architecture*; lower-paying roles rely on *MS Office* and *Basic SQL*.
+
+## Conclusion {.scrollable}
+
+::: {style="font-size:0.8em; line-height:1.2; width:90vw; margin:auto; max-height:80vh; overflow-y:auto;"}
+### Key Findings
+- **Remote roles favor technical skills:** Python, Cloud Architecture, Cybersecurity and Machine Learning top the list for fully remote positions.  
+- **In-person roles emphasize soft skills:** Communication, Teamwork and Project Management remain critical where on-site collaboration is required.  
+- **Industry and pay tiers diverge:** Tech industries and high-salary jobs demand advanced AI-related expertise; lower-paid and non-tech roles rely on foundational tools like MS Office and basic SQL.
+
+### Implications for Businesses
+- **Targeted upskilling:** Invest in AI/data training for remote teams and soft-skill workshops for in-house staff.  
+- **Strategic hiring:** Tailor job postings—highlight technical skills for remote, human-centric for on-site.  
+- **Flexible work models:** Leverage remote policies to access niche talent while preserving on-site culture.  
+- **Workforce planning:** Use these insights to forecast talent needs, align L&D budgets, and shape long-term recruitment strategies.  
+:::
