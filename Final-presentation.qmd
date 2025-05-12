@@ -47,6 +47,7 @@ Rapid AI integration is reshaping job roles and required skill sets. Organizatio
 - **For Policymakers:** Informs education and workforce policies to support an AI-driven economy.
 
 
+
 ## Population & Sampling/Data Collection {transition="zoom"}
 
 All professional job roles (focus: UX/UI designers, project managers, marketing professionals) globally or in the U.S., across industries (tech, marketing, etc.), from 2020–2025.
@@ -81,7 +82,68 @@ data_clean <- data %>%
 str(data_clean)
 ```
 
----
+## Sample Characteristics {transition="fade"}
+- **Population:** All job listings from 2020–2025 across multiple industries  
+- **Sample:** Filtered to records with non-missing AI adoption and growth projections 
+- **Industries covered:** Finance, Technology, Healthcare, Manufacturing, etc.
+
+
+## Research Questions & Hypotheses {transition="fade"}
+- **RQ1 / H1:** Does AI adoption level affect job growth projections?  
+- **RQ2 / H2:** Which job roles are most impacted by AI and why?  
+- **RQ3 / H3:** What skills are most in demand, and how does remote vs. in-person work influence those requirements?
+
+
+## **RQ1 / H1:**
+**H1:** Does AI adoption level affect job growth projections?  
+**RO1:** Assess the impact of AI adoption on overall job growth or decline.
+
+
+## Variables & Their Roles {.scrollable}
+::: {style="font-size:0.9em; width:90vw; margin:auto;"}
+| Variable             | Type                                  | Role                    |
+|----------------------|---------------------------------------|-------------------------|
+| AI_Adoption_Level    | Ordered factor (Low, Medium, High)    | Independent Variable    |
+| Growth_Score         | Numeric (-1, 0, +1)                   | Dependent Variable      |
+| Required_Skills      | Categorical list                      | Dependent (frequency)   |
+| Remote               | Categorical (Remote / In-Person)      | Independent Variable    |
+| Industry             | Categorical                           | Independent Variable    |
+| Salary_Bin           | Categorical (High Salary / Low Salary)| Independent Variable    |
+:::
+
+
+
+## Operationalization of the Scale {transition="zoom"}
+- **AI_Adoption_Level:** Mapped to 1–3 (Low=1, Medium=2, High=3)  
+- **Growth_Score:** Decline = –1; Stable = 0; Growth = +1  
+- **Required_Skills:** Split multi-skill entries into single rows, counted frequencies  
+- **Remote:** Derived from `Remote_Friendly` (“Yes” → Remote; “No” → In-Person)  
+- **Salary_Bin:** Above vs. below median `Salary_USD`
+
+
+## Data Wrangling {transition="fade"}
+1. Loaded raw CSV via `read_csv()`  
+2. Filtered out missing values in key fields  
+3. Converted relevant columns to factors and created `Growth_Score`  
+4. Separated `Required_Skills` into individual records  
+
+
+
+## Data Visualization {transition="fade"}
+
+
+
+
+
+
+
+## Summary Findings {transition="zoom"}
+- No significant association between AI adoption and job growth (χ² p > 0.05)  
+- Remote roles skew technical (Python, Cloud Architecture); in-person skew soft skills (Communication, Teamwork)  
+- Transportation & Finance show strongest growth at medium AI adoption  
+- **Business takeaway:** Tailor upskilling and hiring to skill demands by work mode and industry  
+
+
 
 ## RO2: Roles Most Impacted by AI and Drivers of Demand {transition="zoom"}
 
@@ -96,7 +158,7 @@ We will do some Data Cleaning to prepare, and create demand indicator and risk s
 - Use R to quantify automation risk and demand trends.
 :::
 
----
+
 
 ## Data Preparation: Loading Libraries {transition="fade"}
 
@@ -144,8 +206,6 @@ colSums(is.na(ai_job))
 
 ```
 
----
-
 ## Create a risk scores & Demand Level {transition="fade"}
 
 ::: increnental
@@ -169,7 +229,6 @@ ai_job <- ai_job %>%
   ))
 ```
 
----
 
 ## Job Most Impacted by AI {transition="zoom"}
 
@@ -201,7 +260,6 @@ ai_impact_target <- ai_impact %>% filter(Job_Title %in% target_jobs)
 print(ai_impact_target)
 ```
 
----
 
 ## Demand Trends {transition=“zoom”}
 
@@ -234,7 +292,6 @@ ggplot(demand_analysis, aes(x = Avg_Salary, y = Remote_Percent, color = Demand_L
   theme_minimal()
 ```
 
-----
 
 ## Pay and Remote Work Influence {transition=“zoom”}
 
@@ -258,7 +315,7 @@ pay_remote_demand <- ai_job %>%
 print(pay_remote_demand)
 ```
 
----
+
 
 ## Visualization {transition=“fade”}
 Salary by Demand
@@ -272,7 +329,7 @@ ggplot(pay_remote_demand, aes(x = Demand_Level, y = Avg_Salary, fill = Remote_Pe
   scale_fill_gradient(low = "lightblue", high = "darkblue")
 ```
 
---- 
+
 
 ## RO2 Conclusions {transition=“zoom”}
 Key Findings
