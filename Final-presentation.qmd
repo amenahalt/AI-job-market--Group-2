@@ -29,17 +29,8 @@ execute:
   freeze: auto
 ---
 
-<<<<<<< HEAD
-=======
-```{r setup, include = FALSE}
-library(tidyverse)
-library(tidyr)    
-library(ggthemes)
-library(knitr)
-library(MASS)
-```
 
->>>>>>> e7823b152863fa1f8efc52cfb455b7535f248fbd
+
 ## Table of Contents
 
 -   Introduction
@@ -89,7 +80,7 @@ point, but stratified random sampling and enhanced, diverse collection
 methods would strengthen reliability and address the topic’s
 significance.
 
-------------------------------------------------------------------------
+
 
 ## Data Wrangling {transition="fade"}
 
@@ -138,6 +129,14 @@ str(data_clean)
 **H1:** Does AI adoption level affect job growth projections?\
 **RO1:** Assess the impact of AI adoption on overall job growth or
 decline.
+
+```{r setup, include = FALSE}
+library(tidyverse)
+library(tidyr)    
+library(ggthemes)
+library(knitr)
+library(MASS)
+```
 
 ## Variables & Their Roles {.scrollable}
 
