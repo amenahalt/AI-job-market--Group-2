@@ -2,7 +2,7 @@
 title: "AI & the Future of Work: Skills Demand Insights"
 author: "Amenah Altamimi, Bryant Ha, Shaza Mumtaz"
 institute: “GBA 5910, Cal Poly Pomona"
-date: “05-12-2025
+date: "2025-05-12"
 format: 
   revealjs:
     theme: serif
@@ -12,7 +12,7 @@ format:
     transition: fade
     transition-speed: slow
     incremental: false
-    toc: true
+    toc: false
     toc-depth: 1
     slide-number: true
     scrollable: true
@@ -29,8 +29,6 @@ execute:
   freeze: auto
 ---
 
-
-
 ## Table of Contents
 
 -   Introduction
@@ -38,49 +36,35 @@ execute:
 -   Research Objectives
 -   Importance of the Research
 -   Population & Sample Collection
+-   RO1: Impact of AI adoption job growth or decline.
 -   R02: Identify which job roles are most affected by AI
 -   RO3: Skills Demand Insights
 
 ## Introduction
 
-Welcome to our analysis on how AI adoption is transforming the global
-job market. This presentation focuses on identifying emerging skill
-demands and the influence of remote versus in-person work environments.
+Welcome to our analysis on how AI adoption is transforming the global job market. This presentation focuses on identifying emerging skill demands and the influence of remote versus in-person work environments.
 
 ## Problem Definition
 
-Rapid AI integration is reshaping job roles and required skill sets.
-Organizations face challenges in workforce planning, upskilling, and
-aligning recruitment with evolving market needs.
+Rapid AI integration is reshaping job roles and required skill sets. Organizations face challenges in workforce planning, upskilling, and aligning recruitment with evolving market needs.
 
 ## Research Objectives
 
-1.  **RO1:** Assess the impact of AI adoption on overall job growth or
-    decline.
+1.  **RO1:** Assess the impact of AI adoption on overall job growth or decline.
 2.  **RO2:** Identify which job roles are most affected by AI and why.
-3.  **RO3:** Determine the most in-demand skills and examine how remote
-    vs. in-person work influences skill requirements.
+3.  **RO3:** Determine the most in-demand skills and examine how remote vs. in-person work influences skill requirements.
 
 ## Importance of the Research
 
 -   **For Businesses:** Guides strategic hiring and training programs.
--   **For Employees:** Clarifies skill development pathways for career
-    resilience.
--   **For Policymakers:** Informs education and workforce policies to
-    support an AI-driven economy.
+-   **For Employees:** Clarifies skill development pathways for career resilience.
+-   **For Policymakers:** Informs education and workforce policies to support an AI-driven economy.
 
 ## Population & Sampling/Data Collection {transition="zoom"}
 
-All professional job roles (focus: UX/UI designers, project managers,
-marketing professionals) globally or in the U.S., across industries
-(tech, marketing, etc.), from 2020–2025.
+All professional job roles (focus: UX/UI designers, project managers, marketing professionals) globally or in the U.S., across industries (tech, marketing, etc.), from 2020–2025.
 
-The current convenience sample and pre-compiled data provide a starting
-point, but stratified random sampling and enhanced, diverse collection
-methods would strengthen reliability and address the topic’s
-significance.
-
-
+The current convenience sample and pre-compiled data provide a starting point, but stratified random sampling and enhanced, diverse collection methods would strengthen reliability and address the topic’s significance.
 
 ## Data Wrangling {transition="fade"}
 
@@ -110,25 +94,20 @@ str(data_clean)
 
 ## Sample Characteristics {transition="fade"}
 
--   **Population:** All job listings from 2020–2025 across multiple
-    industries\
--   **Sample:** Filtered to records with non-missing AI adoption and
-    growth projections
--   **Industries covered:** Finance, Technology, Healthcare,
-    Manufacturing, etc.
+-   **Population:** All job listings from 2020–2025 across multiple industries\
+-   **Sample:** Filtered to records with non-missing AI adoption and growth projections
+-   **Industries covered:** Finance, Technology, Healthcare, Manufacturing, etc.
 
 ## Research Questions & Hypotheses {transition="fade"}
 
 -   **RQ1 / H1:** Does AI adoption level affect job growth projections?\
 -   **RQ2 / H2:** Which job roles are most impacted by AI and why?\
--   **RQ3 / H3:** What skills are most in demand, and how does remote
-    vs. in-person work influence those requirements?
+-   **RQ3 / H3:** What skills are most in demand, and how does remote vs. in-person work influence those requirements?
 
 ## **RQ1 / H1:**
 
 **H1:** Does AI adoption level affect job growth projections?\
-**RO1:** Assess the impact of AI adoption on overall job growth or
-decline.
+**RO1:** Assess the impact of AI adoption on overall job growth or decline.
 
 ```{r setup, include = FALSE}
 library(tidyverse)
@@ -141,24 +120,22 @@ library(MASS)
 ## Variables & Their Roles {.scrollable}
 
 ::: {style="font-size:0.9em; width:90vw; margin:auto;"}
-| Variable          | Type                                   | Role                  |
-|-------------------|--------------------------------|---------------------|
-| AI_Adoption_Level | Ordered factor (Low, Medium, High)     | Independent Variable  |
-| Growth_Score      | Numeric (-1, 0, +1)                    | Dependent Variable    |
-| Required_Skills   | Categorical list                       | Dependent (frequency) |
-| Remote            | Categorical (Remote / In-Person)       | Independent Variable  |
-| Industry          | Categorical                            | Independent Variable  |
-| Salary_Bin        | Categorical (High Salary / Low Salary) | Independent Variable  |
+| Variable | Type | Role |
+|------------------------|------------------------|------------------------|
+| AI_Adoption_Level | Ordered factor (Low, Medium, High) | Independent Variable |
+| Growth_Score | Numeric (-1, 0, +1) | Dependent Variable |
+| Required_Skills | Categorical list | Dependent (frequency) |
+| Remote | Categorical (Remote / In-Person) | Independent Variable |
+| Industry | Categorical | Independent Variable |
+| Salary_Bin | Categorical (High Salary / Low Salary) | Independent Variable |
 :::
 
 ## Operationalization of the Scale {transition="zoom"}
 
 -   **AI_Adoption_Level:** Mapped to 1–3 (Low=1, Medium=2, High=3)\
 -   **Growth_Score:** Decline = –1; Stable = 0; Growth = +1\
--   **Required_Skills:** Split multi-skill entries into single rows,
-    counted frequencies\
--   **Remote:** Derived from `Remote_Friendly` (“Yes” → Remote; “No” →
-    In-Person)\
+-   **Required_Skills:** Split multi-skill entries into single rows, counted frequencies\
+-   **Remote:** Derived from `Remote_Friendly` (“Yes” → Remote; “No” → In-Person)\
 -   **Salary_Bin:** Above vs. below median `Salary_USD`
 
 ## Data Wrangling {transition="fade"}
@@ -196,6 +173,7 @@ desc_stats <- ro1_data %>%
 
 kable(desc_stats, caption = "Job Counts by AI Adoption Level")
 ```
+
 ## Data Visualization - Job Growth Proportions {transition="fade"}
 
 ```{r growth-proportion, fig.width=8, fig.height=6}
@@ -244,20 +222,15 @@ ggplot(ro1_data, aes(x = AI_Adoption, fill = Job_Growth_Projection)) +
 
 ## Summary Findings {transition="zoom"}
 
--   No significant association between AI adoption and job growth (χ² p
-    \> 0.05)\
--   Remote roles skew technical (Python, Cloud Architecture); in-person
-    skew soft skills (Communication, Teamwork)\
--   Transportation & Finance show strongest growth at medium AI
-    adoption\
--   **Business takeaway:** Tailor upskilling and hiring to skill demands
-    by work mode and industry
+-   No significant association between AI adoption and job growth (χ² p \> 0.05)\
+-   Remote roles skew technical (Python, Cloud Architecture); in-person skew soft skills (Communication, Teamwork)\
+-   Transportation & Finance show strongest growth at medium AI adoption\
+-   **Business takeaway:** Tailor upskilling and hiring to skill demands by work mode and industry
 
 ## RO2: Roles Most Impacted by AI and Drivers of Demand {transition="zoom"}
 
 **Prompt:**\
-We will do some Data Cleaning to prepare, and create demand indicator
-and risk scores.
+We will do some Data Cleaning to prepare, and create demand indicator and risk scores.
 
 ### Overview
 
@@ -272,8 +245,7 @@ and risk scores.
 ### Setup
 
 ::: incremental
--   Load `tidyverse`, `dplyr`, `ggplot2`, and `readr` for wrangling and
-    visualization.
+-   Load `tidyverse`, `dplyr`, `ggplot2`, and `readr` for wrangling and visualization.
 -   Ensure consistent, reproducible analysis.
 :::
 
@@ -317,9 +289,7 @@ colSums(is.na(ai_job))
 ## Create a risk scores & Demand Level {transition="fade"}
 
 ::: increnental
-Based on Demand Level and Automation Risk - **Variables**: Independent:
-AI_Adoption_Level (Low=1, Medium=2, High=3). Dependent: Automation_Risk
-(Low=1, Medium=2, High=3)
+Based on Demand Level and Automation Risk - **Variables**: Independent: AI_Adoption_Level (Low=1, Medium=2, High=3). Dependent: Automation_Risk (Low=1, Medium=2, High=3)
 :::
 
 ```{r}
@@ -343,12 +313,9 @@ ai_job <- ai_job %>%
 Prompt: Identify which jobs are the most affected by AI
 
 ::: incremental
--   **Variables**: Independent: AI_Adoption_Level (Low=1, Medium=2,
-    High=3). Dependent: Automation_Risk (Low=1, Medium=2, High=3).
--   **Approach**: Summarize automation risk by job title, focusing on
-    high AI adoption.
--   **Findings**: UX Designers and Marketing Specialists face high
-    automation risk in high-AI industries (e.g., Technology).
+-   **Variables**: Independent: AI_Adoption_Level (Low=1, Medium=2, High=3). Dependent: Automation_Risk (Low=1, Medium=2, High=3).
+-   **Approach**: Summarize automation risk by job title, focusing on high AI adoption.
+-   **Findings**: UX Designers and Marketing Specialists face high automation risk in high-AI industries (e.g., Technology).
 :::
 
 ```{r}
@@ -376,13 +343,9 @@ print(ai_impact_target)
 Prompt: The Demand Trend.
 
 ::: incremental
--   **Variables**: Independent: Salary_USD (continuous). Dependent:
-    Demand_Level (High, Medium, Low).
--   **Approach**: Analyze demand by job title, focusing on
-    stable/growing roles.
--   **Findings**: Project Manager and AI Researcher show high/medium
-    demand.Human-centric skills (e.g., communication) and specialized
-    expertise (e.g., machine learning) resist automation.
+-   **Variables**: Independent: Salary_USD (continuous). Dependent: Demand_Level (High, Medium, Low).
+-   **Approach**: Analyze demand by job title, focusing on stable/growing roles.
+-   **Findings**: Project Manager and AI Researcher show high/medium demand.Human-centric skills (e.g., communication) and specialized expertise (e.g., machine learning) resist automation.
 :::
 
 ```{r}
@@ -412,9 +375,7 @@ Prompt: Explore Influence of Pay and Remote Work.
 
 ::: incremental
 -   **Variables**: Salary_USD, Remote_Friendly, Demand_Level.
--   **Findings**: Marketing Specialists (\$93K, 60% remote) decline,
-    while Project Managers (\$92K, 55% remote) grow, suggesting skills
-    drive demand over pay.
+-   **Findings**: Marketing Specialists (\$93K, 60% remote) decline, while Project Managers (\$92K, 55% remote) grow, suggesting skills drive demand over pay.
 :::
 
 ```{r}
@@ -445,44 +406,31 @@ ggplot(pay_remote_demand, aes(x = Demand_Level, y = Avg_Salary, fill = Remote_Pe
 
 ## RO2 Conclusions {transition="“zoom”"}
 
-Key Findings ::: incremental - **High-Risk Jobs**: UX Designers and
-Marketing Specialists face high automation risk in high-AI industries
-(e.g., Technology). - **In-Demand Jobs**: AI Researchers and Project
-Managers show stable/growing demand due to specialized and human-centric
-skills. - **Pay/Remote Work**: Higher salaries and remote options
-correlate with demand, but human judgment is critical. :::
+Key Findings ::: incremental - **High-Risk Jobs**: UX Designers and Marketing Specialists face high automation risk in high-AI industries (e.g., Technology). - **In-Demand Jobs**: AI Researchers and Project Managers show stable/growing demand due to specialized and human-centric skills. - **Pay/Remote Work**: Higher salaries and remote options correlate with demand, but human judgment is critical. :::
 
 # RQ3 / H3
 
-**Research Question 3 (RQ3):** What skills are most in demand in an
-AI-driven job market, and how does remote work versus in-person work
-affect these skill requirements?
+**Research Question 3 (RQ3):** What skills are most in demand in an AI-driven job market, and how does remote work versus in-person work affect these skill requirements?
 
-**Hypothesis 3 (H3):** The prevalence of certain skills differs
-significantly between remote and in-person roles, with technical skills
-(e.g., Python, Cloud Architecture) being more common in remote positions
-and soft skills (e.g., Communication, Teamwork) more common in in-person
-roles.
+**Hypothesis 3 (H3):** The prevalence of certain skills differs significantly between remote and in-person roles, with technical skills (e.g., Python, Cloud Architecture) being more common in remote positions and soft skills (e.g., Communication, Teamwork) more common in in-person roles.
 
 ## Variables and Their Roles {.scrollable}
 
 ::: {style="font-size:0.8em; width:90vw; margin:auto;"}
-| Variable            | Role                    | Description                                                |
-|------------------|------------------|-------------------------------------|
+| Variable | Role | Description |
+|------------------------|------------------------|------------------------|
 | **Required_Skills** | Dependent Variable (DV) | Count of each individual skill extracted from job listings |
-| **Remote**          | Independent Variable 1  | Categorical: “Remote” vs. “In-Person”                      |
-| **Industry**        | Independent Variable 2  | Categorical: sector of the job (e.g., Tech, Marketing)     |
-| **Salary_Bin**      | Independent Variable 3  | Categorical: “High Salary” vs. “Low Salary”                |
+| **Remote** | Independent Variable 1 | Categorical: “Remote” vs. “In-Person” |
+| **Industry** | Independent Variable 2 | Categorical: sector of the job (e.g., Tech, Marketing) |
+| **Salary_Bin** | Independent Variable 3 | Categorical: “High Salary” vs. “Low Salary” |
 :::
 
 # Operationalization of the Scale
 
--   **Required_Skills:** Each skill listed in `Required_Skills` is split
-    into one row per skill; frequency counts measure demand.\
+-   **Required_Skills:** Each skill listed in `Required_Skills` is split into one row per skill; frequency counts measure demand.\
 -   **Remote:** Derived from `Remote_Friendly` column; binary factor.\
 -   **Industry:** Directly from `Industry` field; nominal categories.\
--   **Salary_Bin:** Binned at the median `Salary_USD`; above = "High
-    Salary", below = "Low Salary".
+-   **Salary_Bin:** Binned at the median `Salary_USD`; above = "High Salary", below = "Low Salary".
 
 ## Data Wrangling {.scrollable}
 
@@ -561,39 +509,23 @@ ggplot(salary_counts, aes(x = reorder(Required_Skills, Count), y = Count, fill =
 
 # Summary Findings
 
--   **Remote vs. In-Person:** Remote roles demand more technical skills
-    (e.g., *Python*, *Cloud Architecture*), whereas in-person roles
-    emphasize soft skills (e.g., *Communication*, *Teamwork*).\
--   **Industry Differences:** Tech roles favor *Machine Learning* and
-    *Data Analysis*, while Marketing/Retail focus on *SEO* and *Creative
-    Suite*.\
--   **Salary Tier:** High-paying positions require advanced skills like
-    *AI Ethics* and *Cloud Architecture*; lower-paying roles rely on *MS
-    Office* and *Basic SQL*.
+-   **Remote vs. In-Person:** Remote roles demand more technical skills (e.g., *Python*, *Cloud Architecture*), whereas in-person roles emphasize soft skills (e.g., *Communication*, *Teamwork*).\
+-   **Industry Differences:** Tech roles favor *Machine Learning* and *Data Analysis*, while Marketing/Retail focus on *SEO* and *Creative Suite*.\
+-   **Salary Tier:** High-paying positions require advanced skills like *AI Ethics* and *Cloud Architecture*; lower-paying roles rely on *MS Office* and *Basic SQL*.
 
 ## Conclusion {.scrollable}
 
 ::: {style="font-size:0.8em; line-height:1.2; width:90vw; margin:auto; max-height:80vh; overflow-y:auto;"}
 ### Key Findings
 
--   **Remote roles favor technical skills:** Python, Cloud Architecture,
-    Cybersecurity and Machine Learning top the list for fully remote
-    positions.\
--   **In-person roles emphasize soft skills:** Communication, Teamwork
-    and Project Management remain critical where on-site collaboration
-    is required.\
--   **Industry and pay tiers diverge:** Tech industries and high-salary
-    jobs demand advanced AI-related expertise; lower-paid and non-tech
-    roles rely on foundational tools like MS Office and basic SQL.
+-   **Remote roles favor technical skills:** Python, Cloud Architecture, Cybersecurity and Machine Learning top the list for fully remote positions.\
+-   **In-person roles emphasize soft skills:** Communication, Teamwork and Project Management remain critical where on-site collaboration is required.\
+-   **Industry and pay tiers diverge:** Tech industries and high-salary jobs demand advanced AI-related expertise; lower-paid and non-tech roles rely on foundational tools like MS Office and basic SQL.
 
 ### Implications for Businesses
 
--   **Targeted upskilling:** Invest in AI/data training for remote teams
-    and soft-skill workshops for in-house staff.\
--   **Strategic hiring:** Tailor job postings—highlight technical skills
-    for remote, human-centric for on-site.\
--   **Flexible work models:** Leverage remote policies to access niche
-    talent while preserving on-site culture.\
--   **Workforce planning:** Use these insights to forecast talent needs,
-    align L&D budgets, and shape long-term recruitment strategies.\
+-   **Targeted upskilling:** Invest in AI/data training for remote teams and soft-skill workshops for in-house staff.\
+-   **Strategic hiring:** Tailor job postings—highlight technical skills for remote, human-centric for on-site.\
+-   **Flexible work models:** Leverage remote policies to access niche talent while preserving on-site culture.\
+-   **Workforce planning:** Use these insights to forecast talent needs, align L&D budgets, and shape long-term recruitment strategies.\
 :::
